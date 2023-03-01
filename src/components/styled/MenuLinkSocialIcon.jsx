@@ -15,8 +15,12 @@ export default function MenuLinkSocialIcon({
       target="_blank"
       rel="noreferrer"
       css={{
-        paddingTop: 8,
-        '&:hover': { borderBottom: 'solid 1px', paddingTop: 7 },
+        paddingTop: '8px',
+        '&:hover': {
+          borderBottom: 'solid 1px',
+          paddingTop: '9px',
+          color: theme.palette.primary.light,
+        },
         ...css,
       }}
     >
