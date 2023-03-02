@@ -8,4 +8,6 @@ export const LINK_MEDIUM = "https://czodiac.medium.com";
 
 export const LINK_CZCASH = "https://cz.cash";
 
-export const LINK_IPFS_OBR = "ipfs://QmYeWi4DVNiGatPsVf4zNFebgM3NnhkMvAMzaiaXj85sCo/obr-dat/"
+export const LINK_IPFS_OBR = "ipfs://QmYeWi4DVNiGatPsVf4zNFebgM3NnhkMvAMzaiaXj85sCo/obr-dat/";
+
+export const LINK_COINGECKO_TOKENS = "https://tokens.coingecko.com/binance-smart-chain/all.json";

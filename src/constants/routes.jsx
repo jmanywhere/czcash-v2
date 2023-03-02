@@ -1,21 +1,18 @@
-import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import RocketLaunchOutlinedIcon from '@mui/icons-material/RocketLaunchOutlined';
 import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
 
-import Czog from '../pages/Czog';
 import CzusdNotes from '../pages/CzusdNotes';
 import FairLaunch from '../pages/FairLaunch';
 import FairTribes from '../pages/FairTribes';
 import Liquidity from '../pages/Liquidity';
 import NftLaunch from '../pages/NftLaunch';
 import NftPools from '../pages/NftPools';
-import OneBadRabbit from '../pages/OneBadRabbit';
+import NftTrade from '../pages/NftTrade';
 import Pools from '../pages/Pools';
 import Rewards from '../pages/Rewards';
 import Swap from '../pages/Swap';
-import Ustsd from '../pages/Ustsd';
 
 export const MENU_HOME = [
   {
@@ -32,6 +29,11 @@ export const MENU_HOME = [
         title: 'Liquidity',
         route: '/liquidity',
         component: <Liquidity />,
+      },
+      {
+        title: 'NFTs',
+        route: '/nft',
+        component: <NftTrade />,
       },
     ],
   },
@@ -54,28 +56,6 @@ export const MENU_HOME = [
         title: 'Stable Interest',
         route: '/czusd-notes',
         component: <CzusdNotes />,
-      },
-    ],
-  },
-  {
-    title: 'Collect',
-    route: '/collect',
-    icon: <CollectionsOutlinedIcon />,
-    pages: [
-      {
-        title: 'Silver Dollars',
-        route: '/ustsd',
-        component: <Ustsd />,
-      },
-      {
-        title: 'Bad Rabbits',
-        route: '/1bad',
-        component: <OneBadRabbit />,
-      },
-      {
-        title: 'CZ Originals',
-        route: '/czog',
-        component: <Czog />,
       },
     ],
   },

@@ -4,6 +4,7 @@ import Paper from '@mui/material/Paper';
 import BottomBar from '../components/layouts/BottomBar';
 import FooterArea from '../components/layouts/FooterArea';
 import HeaderBar from '../components/layouts/HeaderBar';
+import TopNavTabs from '../components/layouts/TopNavTabs';
 import UnderConstruction from '../components/layouts/UnderConstruction';
 
 export default function Liquidity() {
@@ -12,6 +13,7 @@ export default function Liquidity() {
     <>
       <Box>
         <HeaderBar />
+        <TopNavTabs />
         <UnderConstruction label="Add liquidity" />
         <FooterArea />
         <Paper

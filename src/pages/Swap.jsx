@@ -1,18 +1,44 @@
 import { useTheme } from '@emotion/react';
+import { Container } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import BottomBar from '../components/layouts/BottomBar';
 import FooterArea from '../components/layouts/FooterArea';
 import HeaderBar from '../components/layouts/HeaderBar';
-import UnderConstruction from '../components/layouts/UnderConstruction';
+import TopNavTabs from '../components/layouts/TopNavTabs';
 
 export default function Swap() {
   const theme = useTheme();
+
   return (
     <>
       <Box>
         <HeaderBar />
-        <UnderConstruction label="Swap any BNB Chain token for any other." />
+        <TopNavTabs />
+        <Container
+          sx={{
+            paddingTop: '1em',
+            minHeight: '100vh',
+            background:
+              'linear-gradient(340deg, ' +
+              theme.palette.primary.dark +
+              ' 0%, ' +
+              theme.palette.secondary.dark +
+              ' 100%);',
+          }}
+        >
+          <Paper
+            sx={{
+              paddingTop: '0.1em',
+              paddingBottom: '1em',
+            }}
+          >
+            <h3>Swap</h3>
+            From:
+            <br />
+            To:
+          </Paper>
+        </Container>
         <FooterArea />
         <Paper
           sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
