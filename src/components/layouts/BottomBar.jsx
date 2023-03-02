@@ -47,7 +47,7 @@ export default function BottomBar() {
         showLabels
         value={bottomNavValue}
         sx={{
-          backgroundColor: theme.palette.primary.light,
+          backgroundColor: theme.palette.primary.main,
           color: theme.palette.text.dark,
           flexGrow: 1,
           display: { xs: 'flex', md: 'none' },

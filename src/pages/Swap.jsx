@@ -17,9 +17,9 @@ export default function Swap() {
           width: '100vw',
           background:
             'linear-gradient(340deg, ' +
-            theme.palette.primary.dark +
+            theme.palette.primary.main +
             ' 0%, ' +
-            theme.palette.secondary.dark +
+            theme.palette.primary.dark +
             ' 100%);',
         }}
       >

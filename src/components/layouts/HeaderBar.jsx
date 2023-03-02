@@ -53,7 +53,7 @@ function HeaderBar() {
             <a sx={{ mr: 1 }} href="./">
               <Box
                 as="img"
-                src="./images/logo-colored.png"
+                src="./images/logo-white.png"
                 sx={{
                   display: { xs: 'none', md: 'flex' },
                   maxWidth: 120,
@@ -63,7 +63,7 @@ function HeaderBar() {
               />
               <Box
                 as="img"
-                src="./images/logo-colored-small.png"
+                src="./images/logo-white-small.png"
                 sx={{
                   display: { xs: 'flex', md: 'none' },
                   maxWidth: 40,
@@ -135,7 +135,7 @@ function HeaderBar() {
                       sx={{
                         width: '9em',
                         textTransform: 'unset',
-                        backgroundColor: theme.palette.primary.light,
+                        backgroundColor: theme.palette.primary.main,
                         color: theme.palette.text.dark,
                       }}
                     >

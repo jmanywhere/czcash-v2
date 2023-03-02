@@ -25,9 +25,9 @@ const BaseThemeProvider = ({ children }) => {
         // E.g., shift from Red 500 to Red 300 or Red 700.
         tonalOffset: 0.2,
         primary: {
-          light: '#0ab698',
-          main: '#00695c',
-          dark: '#003d33',
+          light: '#c5ffd2',
+          main: '#12ff46',
+          dark: '#011e11',
           contrastText: '#eeeef2',
         },
         secondary: {
