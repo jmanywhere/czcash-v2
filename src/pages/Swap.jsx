@@ -12,19 +12,23 @@ export default function Swap() {
 
   return (
     <>
-      <Box>
+      <Box
+        sx={{
+          width: '100vw',
+          background:
+            'linear-gradient(340deg, ' +
+            theme.palette.primary.dark +
+            ' 0%, ' +
+            theme.palette.secondary.dark +
+            ' 100%);',
+        }}
+      >
         <HeaderBar />
         <TopNavTabs />
         <Container
           sx={{
             paddingTop: '1em',
             minHeight: '100vh',
-            background:
-              'linear-gradient(340deg, ' +
-              theme.palette.primary.dark +
-              ' 0%, ' +
-              theme.palette.secondary.dark +
-              ' 100%);',
           }}
         >
           <Paper
