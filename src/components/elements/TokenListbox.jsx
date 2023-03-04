@@ -1,3 +1,4 @@
+import { Button, ClickAwayListener } from '@mui/material';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import ListSubheader from '@mui/material/ListSubheader';
 import Popper from '@mui/material/Popper';
@@ -13,6 +14,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from 'react';
 import { VariableSizeList } from 'react-window';
 import { TokenListContext } from '../../providers/TokenListProvider';
@@ -143,29 +145,142 @@ const StyledPopper = styled(Popper)({
   },
 });
 
-export default function TokenListBox() {
+export default function TokenListBox({
+  labelSelectPrompt,
+  selectedToken,
+  setSelectedToken,
+}) {
   const { tokenList, updateTokenList } = useContext(TokenListContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const theme = useTheme();
+
+  const toggleOpen = (event) => {
+    setAnchorEl(!!anchorEl ? null : event.currentTarget);
+  };
+
+  const id = !!anchorEl ? 'token-popper' : undefined;
+
   return (
-    <Autocomplete
-      id="virtualize-demo"
-      sx={{ width: 300 }}
-      disableListWrap
-      PopperComponent={StyledPopper}
-      ListboxComponent={ListboxComponent}
-      options={tokenList}
-      filterOptions={(options, { inputValue }) =>
-        matchSorter(options, inputValue, {
-          keys: [
-            { threshold: matchSorter.rankings.STARTS_WITH, key: 'symbol' },
-            'name',
-            'address',
-          ],
-          baseSort: (a, b) => (a.index < b.index ? -1 : 1),
-        })
-      }
-      getOptionLabel={(option) => `${option.address}`}
-      renderInput={(params) => <TextField {...params} label="Select Token" />}
-      renderOption={(props, option, state) => [props, option, state.index]}
-    />
+    <>
+      <ClickAwayListener
+        onClickAway={() => {
+          setAnchorEl(null);
+        }}
+      >
+        <Box>
+          <Button
+            variant="outlined"
+            onClick={(event) => {
+              toggleOpen(event);
+            }}
+            aria-describedby={id}
+            sx={{
+              width: '300px',
+              justifyContent: 'left',
+              display: 'flex',
+              height: '3.5em',
+            }}
+          >
+            {!selectedToken ? (
+              <>{labelSelectPrompt}</>
+            ) : (
+              <>
+                <Box
+                  as="img"
+                  src={selectedToken.logoURI}
+                  sx={{
+                    width: '2em',
+                    height: 'auto',
+                    maxHeight: '2em',
+                    marginRight: '0.5em',
+                  }}
+                />
+                <Typography sx={{ textAlign: 'left' }}>
+                  <Typography
+                    as="span"
+                    sx={{
+                      display: 'block',
+                      fontSize: '1em',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {selectedToken.symbol.length < 6
+                      ? selectedToken.symbol
+                      : selectedToken.symbol.substr(0, 4) + '…'}
+                  </Typography>
+                  <Typography
+                    as="span"
+                    sx={{ display: 'block', fontSize: '0.6em' }}
+                  >
+                    {selectedToken.name.length < 12
+                      ? selectedToken.name
+                      : selectedToken.name.substr(0, 10) + '…'}
+                  </Typography>
+                </Typography>
+              </>
+            )}
+          </Button>
+          <Popper
+            id={id}
+            open={!!anchorEl}
+            anchorEl={anchorEl}
+            placement="bottom-start"
+          >
+            <Box sx={{ backgroundColor: theme.palette.background.paper }}>
+              <Autocomplete
+                id="token-selector"
+                sx={{ width: 300, overflowX: 'hidden' }}
+                disableListWrap
+                PopperComponent={StyledPopper}
+                ListboxComponent={ListboxComponent}
+                options={tokenList}
+                open
+                value={selectedToken}
+                selectOnFocus
+                disableCloseOnSelect
+                onChange={(event, newValue) => {
+                  setSelectedToken(newValue);
+                  if (!!newValue) {
+                    //only close when not clearing input
+                    toggleOpen(event);
+                  }
+                }}
+                filterOptions={(options, { inputValue }) =>
+                  matchSorter(options, inputValue, {
+                    keys: [
+                      {
+                        threshold: matchSorter.rankings.STARTS_WITH,
+                        key: 'symbol',
+                      },
+                      'name',
+                      'address',
+                    ],
+                    baseSort: (a, b) => (a.index < b.index ? -1 : 1),
+                  })
+                }
+                getOptionLabel={(option) => `${option.symbol}`}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="filled"
+                    label="Search symbol, name, or address"
+                    sx={{
+                      backgroundColor: theme.palette.background.paper,
+                      zIndex: 1500,
+                    }}
+                  />
+                )}
+                renderOption={(props, option, state) => [
+                  props,
+                  option,
+                  state.index,
+                ]}
+              />
+            </Box>
+          </Popper>
+        </Box>
+      </ClickAwayListener>
+    </>
   );
 }
