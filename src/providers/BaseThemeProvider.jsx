@@ -33,12 +33,12 @@ const BaseThemeProvider = ({ children }) => {
         secondary: {
           light: '#a97acb',
           main: '#9825ea',
-          dark: '#3d0c60',
-          contrastText: '#eeeef2',
+          dark: '#140022',
+          contrastText: '#1e0a2c',
         },
         accent: {
           light: '#eaad4a',
-          main: '#f9a825',
+          main: '#fbbd1d',
           dark: '#be7522',
           contrastText: '#eeeef2',
         },

@@ -160,7 +160,11 @@ function HeaderBar() {
                       onClick={web3ModalOpen}
                       color="primary"
                       variant="contained"
-                      sx={{ width: '9em' }}
+                      sx={{
+                        width: '9em',
+                        color: theme.palette.text.dark,
+                        fontWeight: 'bold',
+                      }}
                     >
                       Connect
                     </Button>

@@ -173,6 +173,7 @@ export default function FooterArea() {
                   marginTop: '15px !important',
                   fontSize: 16,
                   borderRadius: 10,
+                  color: theme.palette.text.dark,
                 }}
               >
                 Whitepaper

@@ -1,4 +1,19 @@
-export const CZUSD_LP_TOKENS = [
+export const LOCAL_TOKENS = [
+    {
+        name: "CZUSD",
+        symbol: "CZUSD",
+        decimals: 18,
+        address: "0xE68b79e51bf826534Ff37AA9CeE71a3842ee9c70",
+        logoURI: "./images/tokens/CZUSD.png",
+    },
+    {
+        name: "CZRED",
+        symbol: "CZR",
+        decimals: 18,
+        address: "0x5cd0c2C744caF04cda258Efc6558A3Ed3defE97b",
+        czusdLp: "0xbf92a0c60a129a56485a3fb891851cf88798602d",
+        logoURI: "./images/tokens/CZR.svg",
+    },
     {
         name: "Lucky Silver Dollar Token",
         symbol: "LSDT",
@@ -38,14 +53,6 @@ export const CZUSD_LP_TOKENS = [
         address: "0x5b5F7e24D075394E92fd3C131B0B8A086e01f819",
         czusdLp: "0xf19ef13cc0c2f8978df4f82887038975e0e60573",
         logoURI: "./images/tokens/DIVIPOOL.png",
-    },
-    {
-        name: "CZRED",
-        symbol: "CZR",
-        decimals: 18,
-        address: "0x5cd0c2C744caF04cda258Efc6558A3Ed3defE97b",
-        czusdLp: "0xbf92a0c60a129a56485a3fb891851cf88798602d",
-        logoURI: "./images/tokens/CZR.svg",
     },
     {
         name: "Wrapped BNB",

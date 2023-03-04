@@ -11,7 +11,7 @@ export const DarkModeProvider = ({ children }) => {
   useEffect(() => {
     setTheme({
       themeMode: isDark ? 'dark' : 'light',
-      themeColor: 'blackWhite',
+      themeColor: 'green',
       themeBackground: 'themeColor',
     });
   }, [isDark]);

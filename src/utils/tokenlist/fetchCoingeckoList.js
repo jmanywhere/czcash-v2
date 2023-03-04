@@ -21,7 +21,7 @@ const fetchCoingeckoList = async () => {
           symbol: token.symbol,
           address: getAddress(token.address),
           decimals: token.decimals,
-          logoURI: token.logoURI.replace('/thumb/','/small/'),
+          logoURI: token.logoURI?.replace('/thumb/', '/small/'),
         };
       });
 

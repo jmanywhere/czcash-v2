@@ -18,13 +18,10 @@ const router = createHashRouter([
     element: <Home />,
   },
   ...MENU_HOME.flatMap((item) => {
-    return item.pages.map((page) => {
-      console.log(item.route + page.route);
-      return {
-        path: item.route + page.route,
-        element: page.component,
-      };
-    });
+    return item.pages.map((page) => ({
+      path: item.route + page.route,
+      element: page.component,
+    }));
   }),
 ]);
 
