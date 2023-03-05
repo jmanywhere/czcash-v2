@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box } from '@mui/system';
-import { formatUnits } from 'ethers/lib/utils.js';
 import { matchSorter } from 'match-sorter';
 import {
   createContext,
@@ -19,6 +18,7 @@ import {
 import { VariableSizeList } from 'react-window';
 import { TokenBalancesContext } from '../../providers/TokenBalancesProvider';
 import { TokenListContext } from '../../providers/TokenListProvider';
+import { bnToCompact } from '../../utils/bnToFixed';
 const LISTBOX_PADDING = 8; // px
 
 function renderRow(props) {
@@ -31,30 +31,40 @@ function renderRow(props) {
 
   return (
     <Typography component="li" {...dataSet[0]} noWrap style={inlineStyle}>
-      <Box
-        as="img"
-        src={dataSet[1].logoURI}
-        sx={{
-          width: '2em',
-          height: 'auto',
-          maxHeight: '2em',
-          marginRight: '0.5em',
-        }}
-      />
-      <Typography sx={{ textAlign: 'left' }}>
-        <Typography
-          as="span"
-          sx={{ display: 'block', fontSize: '1em', fontWeight: 'bold' }}
-        >
-          {dataSet[1].symbol}
+      <Box sx={{ width: '50%', textAlign: 'left' }}>
+        <Box
+          as="img"
+          src={dataSet[1].logoURI}
+          sx={{
+            width: '2em',
+            height: 'auto',
+            maxHeight: '2em',
+            marginRight: '0.5em',
+            display: 'inline-block',
+          }}
+        />
+        <Typography sx={{ textAlign: 'left', display: 'inline-block' }}>
+          <Typography
+            as="span"
+            sx={{ display: 'block', fontSize: '1em', fontWeight: 'bold' }}
+          >
+            {dataSet[1].symbol}
+          </Typography>
+          <Typography as="span" sx={{ display: 'block', fontSize: '0.6em' }}>
+            {dataSet[1].name}
+          </Typography>
         </Typography>
-        <Typography as="span" sx={{ display: 'block', fontSize: '0.6em' }}>
-          {dataSet[1].name}
+      </Box>
+      <Box sx={{ textAlign: 'right',width:'50%' }}>
+        <Typography as="span" sx={{ display: 'block', fontSize: '1em' }}>
+          {!!dataSet[1].balance
+            ? bnToCompact(dataSet[1].balance, dataSet[1].decimals, 4)
+            : 'loading'}
         </Typography>
-      </Typography>
-      <Typography as="span" sx={{ display: 'inline-block', fontSize: '1em' }}>
-        Balance:{formatUnits(dataSet[1]?.balance ?? 0, dataSet[1]?.decimals)}
-      </Typography>
+          <Typography as="span" sx={{ display: 'block', fontSize: '0.6em' }}>
+            $xx.xx
+          </Typography>
+      </Box>
     </Typography>
   );
 }
