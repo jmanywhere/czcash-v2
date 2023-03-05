@@ -8,6 +8,7 @@ import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { bsc } from 'wagmi/chains';
 import BaseThemeProvider from './providers/BaseThemeProvider';
 import { DarkModeProvider } from './providers/DarkModeProvider';
+import { TokenBalancesProvider } from './providers/TokenBalancesProvider';
 import { TokenListProvider } from './providers/TokenListProvider';
 
 //WAGMI + WALLETCONNECT
@@ -37,7 +38,9 @@ function App({ children }) {
     <DarkModeProvider>
       <BaseThemeProvider>
         <TokenListProvider>
-          <WagmiConfig client={wagmiClient}>{children}</WagmiConfig>
+          <WagmiConfig client={wagmiClient}>
+            <TokenBalancesProvider>{children}</TokenBalancesProvider>
+          </WagmiConfig>
         </TokenListProvider>
         <Web3Modal
           projectId={projectId}

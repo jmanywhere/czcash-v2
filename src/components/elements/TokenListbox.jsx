@@ -1,12 +1,12 @@
 import { Button, ClickAwayListener } from '@mui/material';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
-import ListSubheader from '@mui/material/ListSubheader';
 import Popper from '@mui/material/Popper';
 import { styled, useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box } from '@mui/system';
+import { formatUnits } from 'ethers/lib/utils.js';
 import { matchSorter } from 'match-sorter';
 import {
   createContext,
@@ -17,8 +17,8 @@ import {
   useState,
 } from 'react';
 import { VariableSizeList } from 'react-window';
+import { TokenBalancesContext } from '../../providers/TokenBalancesProvider';
 import { TokenListContext } from '../../providers/TokenListProvider';
-
 const LISTBOX_PADDING = 8; // px
 
 function renderRow(props) {
@@ -28,14 +28,6 @@ function renderRow(props) {
     ...style,
     top: style.top + LISTBOX_PADDING,
   };
-
-  if (dataSet.hasOwnProperty('group')) {
-    return (
-      <ListSubheader key={dataSet.key} component="div" style={inlineStyle}>
-        {dataSet.group}
-      </ListSubheader>
-    );
-  }
 
   return (
     <Typography component="li" {...dataSet[0]} noWrap style={inlineStyle}>
@@ -59,6 +51,9 @@ function renderRow(props) {
         <Typography as="span" sx={{ display: 'block', fontSize: '0.6em' }}>
           {dataSet[1].name}
         </Typography>
+      </Typography>
+      <Typography as="span" sx={{ display: 'inline-block', fontSize: '1em' }}>
+        Balance:{formatUnits(dataSet[1]?.balance ?? 0, dataSet[1]?.decimals)}
       </Typography>
     </Typography>
   );
@@ -150,7 +145,8 @@ export default function TokenListBox({
   selectedToken,
   setSelectedToken,
 }) {
-  const { tokenList, updateTokenList } = useContext(TokenListContext);
+  const { tokenList } = useContext(TokenListContext);
+  const { balances } = useContext(TokenBalancesContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const theme = useTheme();
@@ -234,7 +230,10 @@ export default function TokenListBox({
                 disableListWrap
                 PopperComponent={StyledPopper}
                 ListboxComponent={ListboxComponent}
-                options={tokenList}
+                options={tokenList.map((token) => ({
+                  ...token,
+                  balance: balances[token.address],
+                }))}
                 open
                 value={selectedToken}
                 selectOnFocus
