@@ -9,7 +9,7 @@ export default function TopNavTabs(props) {
 
   const value = (() => {
     const item = MENU_HOME.find(
-      (item) => !!matchPath(item.route + '*', location.pathname)
+      (item) => !!matchPath(item.route + '/*', location.pathname)
     );
     return item.pages?.findIndex(
       (page) => !!matchPath(item.route + page.route, location.pathname)
@@ -28,7 +28,7 @@ export default function TopNavTabs(props) {
         {...props}
       >
         {MENU_HOME.find(
-          (item) => !!matchPath(item.route + '*', location.pathname)
+          (item) => !!matchPath(item.route + '/*', location.pathname)
         ).pages?.map((page) => (
           <Tab
             key={page.route}

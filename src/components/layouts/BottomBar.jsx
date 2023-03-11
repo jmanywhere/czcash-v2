@@ -34,7 +34,7 @@ export default function BottomBar() {
       setBottomNavValue(null);
     } else {
       MENU_HOME.forEach((item, index) => {
-        if (!!matchPath(item.route + '*', location.pathname)) {
+        if (!!matchPath(item.route + '/*', location.pathname)) {
           setBottomNavValue(index);
         }
       });

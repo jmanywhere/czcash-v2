@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box } from '@mui/system';
+import { BigNumber } from 'ethers';
 import { matchSorter } from 'match-sorter';
 import {
   createContext,
@@ -55,15 +56,24 @@ function renderRow(props) {
           </Typography>
         </Typography>
       </Box>
-      <Box sx={{ textAlign: 'right',width:'50%' }}>
+      <Box sx={{ textAlign: 'right', width: '50%' }}>
         <Typography as="span" sx={{ display: 'block', fontSize: '1em' }}>
           {!!dataSet[1].balance
             ? bnToCompact(dataSet[1].balance, dataSet[1].decimals, 4)
             : 'loading'}
         </Typography>
-          <Typography as="span" sx={{ display: 'block', fontSize: '0.6em' }}>
-            $xx.xx
-          </Typography>
+        <Typography as="span" sx={{ display: 'block', fontSize: '0.6em' }}>
+          {!!dataSet[1].price && !!dataSet[1].balance
+            ? '$' +
+              bnToCompact(
+                dataSet[1].balance
+                  .mul(BigNumber.from(10).pow(dataSet[1].decimals))
+                  .div(dataSet[1].price),
+                dataSet[1].decimals,
+                4
+              )
+            : 'loading'}
+        </Typography>
       </Box>
     </Typography>
   );
@@ -156,7 +166,7 @@ export default function TokenListBox({
   setSelectedToken,
 }) {
   const { tokenList } = useContext(TokenListContext);
-  const { balances } = useContext(TokenBalancesContext);
+  const { balances, prices } = useContext(TokenBalancesContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const theme = useTheme();
@@ -243,6 +253,7 @@ export default function TokenListBox({
                 options={tokenList.map((token) => ({
                   ...token,
                   balance: balances[token.address],
+                  price: prices[token.address],
                 }))}
                 open
                 value={selectedToken}
