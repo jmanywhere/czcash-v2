@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box } from '@mui/system';
 import { BigNumber } from 'ethers';
+import { parseEther } from 'ethers/lib/utils.js';
 import { matchSorter } from 'match-sorter';
 import {
   createContext,
@@ -17,8 +18,8 @@ import {
   useState,
 } from 'react';
 import { VariableSizeList } from 'react-window';
-import { TokenBalancesContext } from '../../providers/TokenBalancesProvider';
 import { TokenListContext } from '../../providers/TokenListProvider';
+import { TrackedTokensContext } from '../../providers/TrackedTokensProvider';
 import { bnToCompact } from '../../utils/bnToFixed';
 const LISTBOX_PADDING = 8; // px
 
@@ -63,15 +64,8 @@ function renderRow(props) {
             : 'loading'}
         </Typography>
         <Typography as="span" sx={{ display: 'block', fontSize: '0.6em' }}>
-          {!!dataSet[1].price && !!dataSet[1].balance
-            ? '$' +
-              bnToCompact(
-                dataSet[1].balance
-                  .mul(BigNumber.from(10).pow(dataSet[1].decimals))
-                  .div(dataSet[1].price),
-                dataSet[1].decimals,
-                4
-              )
+          {!!dataSet[1].usdVal
+            ? '$' + bnToCompact(dataSet[1].usdVal, 18, 4)
             : 'loading'}
         </Typography>
       </Box>
@@ -166,8 +160,47 @@ export default function TokenListBox({
   setSelectedToken,
 }) {
   const { tokenList } = useContext(TokenListContext);
-  const { balances, prices } = useContext(TokenBalancesContext);
+  const { trackedTokens, syncTokenWeb3Data } = useContext(TrackedTokensContext);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const tokens = tokenList.map((token) => {
+    if (!!trackedTokens.get(token.address)) {
+      const trackedToken = trackedTokens.get(token.address);
+      return {
+        ...token,
+        ...trackedToken,
+        isTracked: true,
+        usdVal:
+          !!trackedToken?.price?.gt(0) && !!trackedToken?.balance?.gt(0)
+            ? (() => {
+                const val = trackedToken.balance
+                  .mul(BigNumber.from(10).pow(trackedToken.decimals))
+                  .div(trackedToken.price);
+                //max val to exclude tokens with low liq
+                if (val.lt(parseEther('1000000000'))) {
+                  return val;
+                } else {
+                  console.log(
+                    'Token usdval over limit:',
+                    token.name,
+                    token.symbol,
+                    token.address
+                  );
+                  return BigNumber.from(0);
+                }
+              })()
+            : BigNumber.from(0),
+      };
+    } else {
+      return {
+        ...token,
+        isTracked: false,
+        balance: BigNumber.from(0),
+        price: BigNumber.from(0),
+        usdVal: BigNumber.from(0),
+      };
+    }
+  });
 
   const theme = useTheme();
 
@@ -250,11 +283,7 @@ export default function TokenListBox({
                 disableListWrap
                 PopperComponent={StyledPopper}
                 ListboxComponent={ListboxComponent}
-                options={tokenList.map((token) => ({
-                  ...token,
-                  balance: balances[token.address],
-                  price: prices[token.address],
-                }))}
+                options={tokens}
                 open
                 value={selectedToken}
                 selectOnFocus
@@ -276,7 +305,19 @@ export default function TokenListBox({
                       'name',
                       'address',
                     ],
-                    baseSort: (a, b) => (a.index < b.index ? -1 : 1),
+                    baseSort: (a, b) => {
+                      if (a.item.usdVal.eq(b.item.usdVal)) {
+                        if (
+                          a.item.source != b.item.source &&
+                          a.item.source == 'czcash'
+                        ) {
+                          return -1;
+                        } else {
+                          return a.index < b.index ? -1 : 1;
+                        }
+                      }
+                      return a.item.usdVal.gt(b.item.usdVal) ? -1 : 1;
+                    },
                   })
                 }
                 getOptionLabel={(option) => `${option.symbol}`}

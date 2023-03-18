@@ -8,7 +8,7 @@ export const TokenListContext = createContext(null);
 export const TokenListProvider = ({ children }) => {
   const [tokenList, setTokenList] = useState(
     localStorage.getItem('tokenList') === 'true'
-      ? localStorage.getItem('tokenList')
+      ? JSON.parse(localStorage.getItem('tokenList'))
       : []
   );
   useEffect(() => {
@@ -25,6 +25,7 @@ export const TokenListProvider = ({ children }) => {
     }));
     if (tokenList.length < 1) {
       //User gets the czusd tokens even if coingecko down
+      localStorage.setItem('tokenList', JSON.stringify(localTokens));
       setTokenList(localTokens);
     }
     const geckoTokens = await fetchCoingeckoList();
@@ -39,6 +40,7 @@ export const TokenListProvider = ({ children }) => {
         newTokenList.push({ source: 'coingecko', ...token });
       }
     });
+    localStorage.setItem('tokenList', JSON.stringify(newTokenList));
     setTokenList(newTokenList);
   };
 

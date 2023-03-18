@@ -8,8 +8,8 @@ import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { bsc } from 'wagmi/chains';
 import BaseThemeProvider from './providers/BaseThemeProvider';
 import { DarkModeProvider } from './providers/DarkModeProvider';
-import { TokenBalancesProvider } from './providers/TokenBalancesProvider';
 import { TokenListProvider } from './providers/TokenListProvider';
+import { TrackedTokensProvider } from './providers/TrackedTokensProvider';
 
 //WAGMI + WALLETCONNECT
 if (!import.meta.env.VITE_WALLETCONNECT_CLOUD_ID) {
@@ -39,7 +39,7 @@ function App({ children }) {
       <BaseThemeProvider>
         <TokenListProvider>
           <WagmiConfig client={wagmiClient}>
-            <TokenBalancesProvider>{children}</TokenBalancesProvider>
+            <TrackedTokensProvider>{children}</TrackedTokensProvider>
           </WagmiConfig>
         </TokenListProvider>
         <Web3Modal
