@@ -4,7 +4,7 @@ export const LOCAL_TOKENS = [
         symbol: "CZUSD",
         decimals: 18,
         address: "0xE68b79e51bf826534Ff37AA9CeE71a3842ee9c70",
-        logoURI: "./images/tokens/CZUSD.png",
+        logoURI: "./images/tokens/czusd.svg",
     },
     {
         name: "CZRED",
@@ -44,7 +44,7 @@ export const LOCAL_TOKENS = [
         decimals: 18,
         address: "0xE95412D2d374B957ca7f8d96ABe6b6c1148fA438",
         czusdLp: "0x117c53a2487556bfb1e067b8de35760380342a4b",
-        logoURI: "./images/tokens/LRT.png",
+        logoURI: "./images/tokens/LRT.svg",
     },
     {
         name: "DIVIPOOL",

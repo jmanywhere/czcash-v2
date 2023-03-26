@@ -158,6 +158,8 @@ export default function TokenListBox({
   labelSelectPrompt,
   selectedToken,
   setSelectedToken,
+  selectedTokenBalanceString,
+  selectedTokenPriceString,
 }) {
   const { tokenList } = useContext(TokenListContext);
   const { trackedTokens, syncTokenWeb3Data } = useContext(TrackedTokensContext);
@@ -217,59 +219,78 @@ export default function TokenListBox({
           setAnchorEl(null);
         }}
       >
-        <Box>
-          <Button
-            variant="outlined"
-            onClick={(event) => {
-              toggleOpen(event);
-            }}
-            aria-describedby={id}
-            sx={{
-              width: '300px',
-              justifyContent: 'left',
-              display: 'flex',
-              height: '3.5em',
-            }}
-          >
-            {!selectedToken ? (
-              <>{labelSelectPrompt}</>
-            ) : (
-              <>
-                <Box
-                  as="img"
-                  src={selectedToken.logoURI}
-                  sx={{
-                    width: '2em',
-                    height: 'auto',
-                    maxHeight: '2em',
-                    marginRight: '0.5em',
+        <>
+          {!selectedToken ? (
+            <Button
+              variant="outlined"
+              onClick={(event) => {
+                toggleOpen(event);
+              }}
+              aria-describedby={id}
+              sx={{
+                width: '10em',
+                justifyContent: 'space-between',
+                display: 'flex',
+                height: '3.5em',
+              }}
+            >
+              {labelSelectPrompt}
+            </Button>
+          ) : (
+            <>
+              <Box sx={{ display: 'inline-block' }}>
+                <Button
+                  variant="outlined"
+                  onClick={(event) => {
+                    toggleOpen(event);
                   }}
-                />
-                <Typography sx={{ textAlign: 'left' }}>
-                  <Typography
-                    as="span"
-                    sx={{
-                      display: 'block',
-                      fontSize: '1em',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {selectedToken.symbol.length < 6
-                      ? selectedToken.symbol
-                      : selectedToken.symbol.substr(0, 4) + '…'}
-                  </Typography>
-                  <Typography
-                    as="span"
-                    sx={{ display: 'block', fontSize: '0.6em' }}
-                  >
-                    {selectedToken.name.length < 12
-                      ? selectedToken.name
-                      : selectedToken.name.substr(0, 10) + '…'}
-                  </Typography>
-                </Typography>
-              </>
-            )}
-          </Button>
+                  aria-describedby={id}
+                  sx={{
+                    width: '10em',
+                    justifyContent: 'space-between',
+                    display: 'flex',
+                    height: '3.5em',
+                  }}
+                >
+                  <Box>
+                    <Box
+                      as="img"
+                      src={selectedToken.logoURI}
+                      sx={{
+                        width: '2em',
+                        height: 'auto',
+                        maxHeight: '2em',
+                        marginRight: '0.5em',
+                        display: 'inline-block',
+                      }}
+                    />
+                    <Box sx={{ textAlign: 'left', display: 'inline-block' }}>
+                      <Typography
+                        as="span"
+                        sx={{
+                          display: 'block',
+                          fontSize: '1em',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {selectedToken.symbol.length < 6
+                          ? selectedToken.symbol
+                          : selectedToken.symbol.substr(0, 4) + '…'}
+                      </Typography>
+                      <Typography
+                        as="span"
+                        sx={{ display: 'block', fontSize: '0.6em' }}
+                      >
+                        {selectedToken.name.length < 12
+                          ? selectedToken.name
+                          : selectedToken.name.substr(0, 10) + '…'}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Button>
+              </Box>
+            </>
+          )}
           <Popper
             id={id}
             open={!!anchorEl}
@@ -340,7 +361,7 @@ export default function TokenListBox({
               />
             </Box>
           </Popper>
-        </Box>
+        </>
       </ClickAwayListener>
     </>
   );
