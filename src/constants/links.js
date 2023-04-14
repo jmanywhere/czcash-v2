@@ -11,3 +11,7 @@ export const LINK_CZCASH = "https://cz.cash";
 export const LINK_IPFS_OBR = "ipfs://QmYeWi4DVNiGatPsVf4zNFebgM3NnhkMvAMzaiaXj85sCo/obr-dat/";
 
 export const LINK_COINGECKO_TOKENS = "https://tokens.coingecko.com/binance-smart-chain/all.json";
+
+export const LINK_TERMS_OF_USE = "https://czodiac.gitbook.io/czodiac-litepaper/terms-of-use";
+
+export const LINK_PRIVACY_POLICY = "https://czodiac.gitbook.io/czodiac-litepaper/privacy-policy";
