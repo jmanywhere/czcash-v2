@@ -13,9 +13,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAccount, useDisconnect } from 'wagmi';
 import { MENU_HOME } from '../../constants/routes';
+// hooks
+import  useTokenPriceFetch from '../../hooks/useTokenPriceFetch';
 
 function HeaderBar() {
   const theme = useTheme();
+  useTokenPriceFetch();
 
   const [anchorEl, setAnchorEl] = useState(null);
 

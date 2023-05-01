@@ -5,6 +5,9 @@ import BottomBar from '../components/layouts/BottomBar';
 import FooterArea from '../components/layouts/FooterArea';
 import HeaderBar from '../components/layouts/HeaderBar';
 import UnderConstruction from '../components/layouts/UnderConstruction';
+import PriceBubbles from '../components/price/PriceBubbles';
+
+
 
 export default function Pools() {
   const theme = useTheme();
@@ -12,6 +15,7 @@ export default function Pools() {
     <>
       <Box>
         <HeaderBar />
+        <PriceBubbles/>
         <UnderConstruction label="High Yield Pools" />
         <FooterArea />
         <Paper
